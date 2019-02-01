@@ -45,6 +45,7 @@
     <Compile Include="Core\Scope\Gender.cs" />
     <Compile Include="Core\Scope\IFeedableNote.cs" />
     <Compile Include="Core\Scope\MarritalStatus.cs" />
+    <Compile Include="Core\Scope\Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
