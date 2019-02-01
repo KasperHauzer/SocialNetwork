@@ -17,7 +17,12 @@
 
         public string Id {
             get;
-            protected set;
+            set;
+        }
+
+        public Passport Passport {
+            get;
+            set;
         }
 
         #endregion
@@ -27,6 +32,7 @@
         public Account(string id)
         {
             Id = id;
+            Passport = new Passport(this);
         }
 
         #endregion
