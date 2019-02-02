@@ -180,6 +180,46 @@ namespace SocialNetwork.Core
             return Id;
         }
 
+        /// <summary>
+        /// Подписывает текущего пользователя на <paramref name="following"/>, для получени уведомлений об изменениях на стороне <paramref name="following"/>.
+        /// </summary>
+        /// <param name="following">Пользователь, на которого необходимо подписать текущего.</param>
+        /// <returns>Успешность подписания.</returns>
+        public bool SubscribeTo(Account following)
+        {
+            if (following == null) {
+                throw new ArgumentNullException();
+            }
+
+            Profile.Bind(this, following);
+            following.Passport.PropertyHasChanged += OnFollowingPropertyHasChanged;
+            following.Education.PropertyHasChanged += OnFollowingPropertyHasChanged;
+            following.Profile.PhotoHasChanged += OnFollowingPhotoHasChanged;
+            following.Profile.PhotoHasRemoved += OnFollowingPhotoHasRemoved;
+            following.Profile.PublishedNews += OnFollowingPublishNews;
+            following.Profile.NewsHasRemoved += OnFollowingRemovedNews;
+            following.Profile.GotFollower += OnFollowingGotFollower;
+            following.Profile.GotFollowing += OnFollowingGotFollowing;
+            return true;
+        }
+
+        public void Unsubscribe(Account following)
+        {
+            if (following == null) {
+                throw new ArgumentNullException();
+            }
+
+            Profile.Untie(this, following);
+            following.Passport.PropertyHasChanged -= OnFollowingPropertyHasChanged;
+            following.Education.PropertyHasChanged -= OnFollowingPropertyHasChanged;
+            following.Profile.PhotoHasChanged -= OnFollowingPhotoHasChanged;
+            following.Profile.PhotoHasRemoved -= OnFollowingPhotoHasRemoved;
+            following.Profile.PublishedNews -= OnFollowingPublishNews;
+            following.Profile.NewsHasRemoved -= OnFollowingRemovedNews;
+            following.Profile.GotFollower -= OnFollowingGotFollower;
+            following.Profile.GotFollowing -= OnFollowingGotFollowing;
+        }
+
         #endregion
     }
 }
