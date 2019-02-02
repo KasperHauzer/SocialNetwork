@@ -45,6 +45,7 @@
     <Compile Include="Core\Account.cs" />
     <Compile Include="Core\Education.cs" />
     <Compile Include="Core\Passport.cs" />
+    <Compile Include="Core\Profile.cs" />
     <Compile Include="Core\Scope\Gender.cs" />
     <Compile Include="Core\Scope\IFeedableNote.cs" />
     <Compile Include="Core\Scope\MarritalStatus.cs" />
