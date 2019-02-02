@@ -183,6 +183,47 @@ namespace SocialNetwork.Core
 
         #region Методы
 
+        /// <summary>
+        /// Добавляет в список <see cref="Profile.FollowingId"/> <paramref name="follower"/> <see cref="Account.Id"/> <paramref name="following"/> 
+        /// и добавляет в список <see cref="Profile.FollowersId"/> <paramref name="following"/> <see cref="Account.Id"/> <paramref name="follower"/>.
+        /// Вызывает событие <see cref="Profile.GotFollowing"/> для <paramref name="follower"/> и событие <see cref="Profile.GotFollower"/> для <paramref name="following"/>.
+        /// </summary>
+        /// <param name="follower">Экземпляр класса <see cref="Account"/>, который подписывается.</param>
+        /// <param name="following">Экземпляр класса <see cref="Account"/>, на которого подписываются.</param>
+        /// <returns>Успешность свзяки двух пользователей.</returns>
+        public static bool Bind(Account follower, Account following)
+        {
+            if (follower == null || following == null) {
+                throw new ArgumentNullException();
+            } else if (following.Profile.FollowersId.Contains(follower.Id) || follower.Profile.FollowingId.Contains(following.Id)) {
+                return false;
+            }
+
+            follower.Profile.FollowingId.Add(following.Id);
+            follower.Profile.OnGotFollowing("Новая подписка.", $"Пользователь {follower.Passport.Middlename} {follower.Passport.Name} подписался на {following.Passport.Middlename} {following.Passport.Name}.", following.Id);
+
+            following.Profile.FollowersId.Add(follower.Id);
+            following.Profile.OnGotFollower("Новый подписчик.", $"На пользователя {following.Passport.Middlename} {following.Passport.Name} подписался(-лась) {follower.Passport.Middlename} {follower.Passport.Name}.", follower.Id);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Удаляет <see cref="Account.Id"/> <paramref name="following"/> из списка <see cref="Profile.FollowingId"/> и
+        /// удаляет <see cref="Account.Id"/> <paramref name="follower"/> из списка <see cref="Profile.FollowersId"/>.
+        /// </summary>
+        /// <param name="follower">Экземпляр класса <see cref="Account"/>, который является подписчиком.</param>
+        /// <param name="following">Экземпляр класса <see cref="Account"/>, на который подписан <paramref name="follower"/>.</param>
+        public static void Untie(Account follower, Account following)
+        {
+            if (following == null || following == null) {
+                throw new ArgumentNullException();
+            }
+
+            follower.Profile.FollowingId.Remove(following.Id);
+            following.Profile.FollowersId.Remove(follower.Id);
+        }
+
         public override string ToString()
         {
             return Owner.ToString();
@@ -204,12 +245,20 @@ namespace SocialNetwork.Core
             };
         }
 
+        /// <summary>
+        /// Добавляет новость в список <see cref="News"/> и вызывает событие <see cref="PublishedNews"/>.
+        /// </summary>
+        /// <param name="note">Добавляемая новость.</param>
         public void AddNews(Note note)
         {
             News.Add(note);
             OnPublishedNews("Добавлена новая запись.", $"{Owner.Passport.Middlename} {Owner.Passport.Name} добавил(-а) новую запись.", note);
         }
 
+        /// <summary>
+        /// Удаляет новость из списка <see cref="News"/> и вызывает событие <see cref="NewsHasRemoved"/>.
+        /// </summary>
+        /// <param name="note">Удаляемая новость.</param>
         public void RemoveNews(Note note)
         {
             News.Remove(note);
