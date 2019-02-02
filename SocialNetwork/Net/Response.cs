@@ -76,6 +76,13 @@ namespace SocialNetwork.Net
 
         #region Методы
 
+        public static Response Parse(byte[] buffer)
+        {
+            using (var stream = new MemoryStream(buffer)) {
+                return (Response)new BinaryFormatter().Deserialize(stream);
+            }
+        }
+
         public override string ToString()
         {
             return Description;
@@ -86,13 +93,6 @@ namespace SocialNetwork.Net
             using (var stream = new MemoryStream()) {
                 new BinaryFormatter().Serialize(stream, this);
                 return stream.GetBuffer();
-            }
-        }
-
-        public Response Parse(byte[] buffer)
-        {
-            using (var stream = new MemoryStream(buffer)) {
-                return (Response)new BinaryFormatter().Deserialize(stream);
             }
         }
 
