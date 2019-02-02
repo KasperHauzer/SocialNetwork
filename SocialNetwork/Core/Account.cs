@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SocialNetwork.Core.Scope;
+using System;
 
 namespace SocialNetwork.Core
 {
@@ -24,6 +25,41 @@ namespace SocialNetwork.Core
         #endregion
 
         #region Поля
+
+        /// <summary>
+        /// При изменении свойств <see cref="Passport"/>, <see cref="Education"/> пользователей, на которых подписан данные, вызывается данное событие.
+        /// </summary>
+        public event Action<Account, IFeedableNote> FollowigPropertyHasChanged;
+
+        /// <summary>
+        /// При изменени <see cref="Profile.Photo"/> пользователей, на которых подписан данные, вызывается данное событие.
+        /// </summary>
+        public event Action<Account, Note> FollowingPhotoHasChanged;
+
+        /// <summary>
+        /// При удалении <see cref="Profile.Photo"/> пользователями, на которых подписан данный, вызывается данное событие.
+        /// </summary>
+        public event Action<Account, Note> FollowingPhotoHasRemoved;
+
+        /// <summary>
+        /// При добавлении новых новостей методом <see cref="Profile.AddNews(Note)"/> пользователями, на которых подписан данные, вызывается данное событие.
+        /// </summary>
+        public event Action<Account, Note> FollowingPublishedNews;
+
+        /// <summary>
+        /// При удалении новости методом <see cref="Profile.RemoveNews(Note)"/> пользователями, на которых подписан данные, вызывается данное событие.
+        /// </summary>
+        public event Action<Account, Note> FollowingRemovedNews;
+
+        /// <summary>
+        /// При подписке других пользователей на пользователей, на которых подписан данный, вызывается данное событие.
+        /// </summary>
+        public event Action<Account, Note> FollowingGotFollower;
+
+        /// <summary>
+        /// При подписке пользователей, на которых подписан данный, на других пользователей, вызывается данное событие.
+        /// </summary>
+        public event Action<Account, Note> FollowingGotFollowing;
 
         string id;
 
@@ -84,6 +120,41 @@ namespace SocialNetwork.Core
             Passport = new Passport(this);
             Education = new Education(this);
             Profile = new Profile(this);
+        }
+        
+        protected void OnFollowingPropertyHasChanged(Account account, IFeedableNote note)
+        {
+            FollowigPropertyHasChanged?.Invoke(account, note);
+        }
+
+        protected void OnFollowingPhotoHasChanged(Account account, Note note)
+        {
+            FollowingPhotoHasChanged?.Invoke(account, note);
+        }
+
+        protected void OnFollowingPhotoHasRemoved(Account account, Note note)
+        {
+            FollowingPhotoHasRemoved?.Invoke(account, note);
+        }
+
+        protected void OnFollowingPublishNews(Account account, Note note)
+        {
+            FollowingPublishedNews?.Invoke(account, note);
+        }
+
+        protected void OnFollowingRemovedNews(Account account, Note note)
+        {
+            FollowingRemovedNews?.Invoke(account, note);
+        }
+
+        protected void OnFollowingGotFollower(Account account, Note note)
+        {
+            FollowingGotFollower?.Invoke(account, note);
+        }
+
+        protected void OnFollowingGotFollowing(Account account, Note note)
+        {
+            FollowingGotFollowing?.Invoke(account, note);
         }
 
         #endregion
