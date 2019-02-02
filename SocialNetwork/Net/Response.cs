@@ -88,7 +88,7 @@ namespace SocialNetwork.Net
             return Description;
         }
 
-        public byte[] ToBuffer()
+        public byte[] GetBuffer()
         {
             using (var stream = new MemoryStream()) {
                 new BinaryFormatter().Serialize(stream, this);
