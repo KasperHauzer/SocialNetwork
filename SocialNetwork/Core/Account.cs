@@ -194,6 +194,19 @@ namespace SocialNetwork.Core
             };
         }
 
+        public void EatBuffer(Buffer buffer)
+        {
+            Passport.Name = buffer.PassportBuffer.Name;
+            Passport.Middlename = buffer.PassportBuffer.Middlename;
+            Passport.Lastname = buffer.PassportBuffer.Lastname;
+            Passport.Birthday = buffer.PassportBuffer.Birthday;
+            Passport.Gender = buffer.PassportBuffer.Gender;
+            Passport.Status = buffer.PassportBuffer.Status;
+            Education.School = buffer.EducationBuffer.School;
+            Education.University = buffer.EducationBuffer.University;
+            Profile.Photo = buffer.ProfileBuffer.Photo;
+        }
+
         /// <summary>
         /// Подписывает текущего пользователя на <paramref name="following"/>, для получени уведомлений об изменениях на стороне <paramref name="following"/>.
         /// </summary>
