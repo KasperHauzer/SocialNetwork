@@ -40,6 +40,7 @@ namespace SocialNetwork.Core.Scope
 
         /// <summary>
         /// Дополнительные данные.
+        /// Данное поле должно хранить ссылку только на объекты помеченные атрибутом <see cref="SerializableAttribute"/>.
         /// </summary>
         public object Data {
             get;
