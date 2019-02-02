@@ -1,4 +1,6 @@
-﻿namespace SocialNetwork.Core
+﻿using System;
+
+namespace SocialNetwork.Core
 {
     /// <summary>
     /// Инкапсулирует пользователя в социальной сети.
@@ -7,20 +9,63 @@
     {
         #region Вложенные структуры
 
+        /// <summary>
+        /// Инкапсулирует значимые данные содержащего типа для представления в бинарном виде.
+        /// </summary>
+        [Serializable]
+        public struct Buffer
+        {
+            public string Id;
+            public Passport.Buffer PassportBuffer;
+            public Education.Buffer EducationBuffer;
+            public Profile.Buffer ProfileBuffer;
+        }
+
         #endregion
 
         #region Поля
+
+        string id;
 
         #endregion
 
         #region Свойства
 
+        /// <summary>
+        /// Поле для однозначной идентификации пользователя.
+        /// Однозначность данного поля необходимо поддерживать самостоятельно.
+        /// </summary>
         public string Id {
+            get => id;
+            set {
+                if (!IsValidId(value)) {
+                    throw new ArgumentException();
+                }
+
+                id = value;
+            }
+        }
+
+        /// <summary>
+        /// Личный данные.
+        /// </summary>
+        public Passport Passport {
             get;
             set;
         }
 
-        public Passport Passport {
+        /// <summary>
+        /// Данные об образовании.
+        /// </summary>
+        public Education Education {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Профильные данные пользователя.
+        /// </summary>
+        public Profile Profile {
             get;
             set;
         }
@@ -29,15 +74,35 @@
 
         #region Конструкторы, On-методы
 
+        /// <summary>
+        /// Полный конструктор.
+        /// </summary>
+        /// <param name="id">Однозначный идентификатор пользователя.</param>
         public Account(string id)
         {
             Id = id;
             Passport = new Passport(this);
+            Education = new Education(this);
+            Profile = new Profile(this);
         }
 
         #endregion
 
         #region Методы
+
+        /// <summary>
+        /// Указывает можно ли использовать входную строку как значение поля <see cref="Id"/>.
+        /// </summary>
+        /// <param name="id">Входная строка.</param>
+        /// <returns>Валидность идентификатора.</returns>
+        public static bool IsValidId(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id)) {
+                return false;
+            }
+
+            return true;
+        }
 
         public override string ToString()
         {
