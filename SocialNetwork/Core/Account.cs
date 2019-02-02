@@ -181,6 +181,20 @@ namespace SocialNetwork.Core
         }
 
         /// <summary>
+        /// Возвращает <see cref="Account.Buffer"/> с копиями значений текущего экземпляра.
+        /// </summary>
+        /// <returns><see cref="Account.Buffer"/> с копиями значений.</returns>
+        public Buffer GetBuffer()
+        {
+            return new Buffer {
+                Id = Id,
+                PassportBuffer = Passport.GetBuffer(),
+                EducationBuffer = Education.GetBuffer(),
+                ProfileBuffer = Profile.GetBuffer()
+            };
+        }
+
+        /// <summary>
         /// Подписывает текущего пользователя на <paramref name="following"/>, для получени уведомлений об изменениях на стороне <paramref name="following"/>.
         /// </summary>
         /// <param name="following">Пользователь, на которого необходимо подписать текущего.</param>
