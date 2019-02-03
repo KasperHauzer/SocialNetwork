@@ -227,6 +227,11 @@ namespace SocialNetwork.Core
             following.Profile.NewsHasRemoved += OnFollowingRemovedNews;
             following.Profile.GotFollower += OnFollowingGotFollower;
             following.Profile.GotFollowing += OnFollowingGotFollowing;
+
+            if (following.Passport.Birthday.DayOfYear == DateTime.Now.DayOfYear) {
+                following.OnFollowingPropertyHasChanged(following, new Note(following.Id, "День рождение.", $"Сегодня день рождения {following.Passport.Middlename} {following.Passport.Name}"));
+            }
+
             return true;
         }
 

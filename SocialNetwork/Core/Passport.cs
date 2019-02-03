@@ -120,6 +120,10 @@ namespace SocialNetwork.Core
 
                 OnPropertyHasChanged("Изменение дня рождения.", $"{Middlename} {Name} изменил(-а) день рождения на {value.ToShortDateString()}.");
                 birthday = value;
+
+                if (value.DayOfYear == DateTime.Now.DayOfYear) {
+                    OnPropertyHasChanged("День рождения.", $"Сегодня день рождения {Middlename} {Name}");
+                }
             }
         }
 
