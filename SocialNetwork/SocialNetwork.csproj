@@ -50,6 +50,7 @@
     <Compile Include="Core\Scope\IFeedableNote.cs" />
     <Compile Include="Core\Scope\MarritalStatus.cs" />
     <Compile Include="Core\Scope\Note.cs" />
+    <Compile Include="Net\Client.cs" />
     <Compile Include="Net\Response.cs" />
     <Compile Include="Net\Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
