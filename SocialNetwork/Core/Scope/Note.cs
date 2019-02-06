@@ -85,5 +85,14 @@ namespace SocialNetwork.Core.Scope
         public Note(string ownerId, string title, string description) : this(ownerId, title, description, DateTime.Now, null) { }
 
         #endregion
+
+        #region
+
+        public override string ToString()
+        {
+            return Title;
+        }
+
+        #endregion
     }
 }
