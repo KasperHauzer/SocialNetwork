@@ -34,32 +34,32 @@ namespace SocialNetwork.Core
         /// <summary>
         /// При изменение фота профиля вызывается данное событие.
         /// </summary>
-        public event Action<Account, Note> PhotoHasChanged;
+        public event Action<Note> PhotoHasChanged;
 
         /// <summary>
         /// При удалении фота профиля вызывается данное событие.
         /// </summary>
-        public event Action<Account, Note> PhotoHasRemoved;
+        public event Action<Note> PhotoHasRemoved;
 
         /// <summary>
         /// При новой подписке на данного пользователя вызывается данное событие.
         /// </summary>
-        public event Action<Account, Note> GotFollower;
+        public event Action<Note> GotFollower;
 
         /// <summary>
         /// При подписке данного пользователя на другого вызывается данное событие.
         /// </summary>
-        public event Action<Account, Note> GotFollowing;
+        public event Action<Note> GotFollowing;
 
         /// <summary>
         /// При добавлении новости вызывается данное событие.
         /// </summary>
-        public event Action<Account, Note> PublishedNews;
+        public event Action<Note> PublishedNews;
 
         /// <summary>
         /// При удалении новости вызывается данное событие.
         /// </summary>
-        public event Action<Account, Note> NewsHasRemoved;
+        public event Action<Note> NewsHasRemoved;
 
         /// <summary>
         /// Фото профиля по умолчанию.
@@ -151,32 +151,32 @@ namespace SocialNetwork.Core
 
         protected void OnPhotoHasChanged(string title, string description, Bitmap photo)
         {
-            PhotoHasChanged?.Invoke(Owner, new Note(Owner.Id, title, description, photo));
+            PhotoHasChanged?.Invoke(new Note(Owner.Id, title, description, photo));
         }
 
         protected void OnPhotoRemoved(string title, string description, Bitmap photo)
         {
-            PhotoHasRemoved?.Invoke(Owner, new Note(Owner.Id, title, description, photo));
+            PhotoHasRemoved?.Invoke(new Note(Owner.Id, title, description, photo));
         }
 
         protected void OnGotFollower(string title, string description, string followerId)
         {
-            GotFollower?.Invoke(Owner, new Note(Owner.Id, title, description, followerId));
+            GotFollower?.Invoke(new Note(Owner.Id, title, description, followerId));
         }
 
         protected void OnGotFollowing(string title, string description, string followingId)
         {
-            GotFollowing?.Invoke(Owner, new Note(Owner.Id, title, description, followingId));
+            GotFollowing?.Invoke(new Note(Owner.Id, title, description, followingId));
         }
 
         protected void OnPublishedNews(string title, string description, Note note)
         {
-            PublishedNews?.Invoke(Owner, new Note(Owner.Id, title, description, note));
+            PublishedNews?.Invoke(new Note(Owner.Id, title, description, note));
         }
 
         protected void OnNewsHasRemoved(string title, string description, Note note)
         {
-            NewsHasRemoved?.Invoke(Owner, new Note(Owner.Id, title, description, note));
+            NewsHasRemoved?.Invoke(new Note(Owner.Id, title, description, note));
         }
 
         #endregion

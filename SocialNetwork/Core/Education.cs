@@ -29,7 +29,7 @@ namespace SocialNetwork.Core
         /// <summary>
         /// Перед изменением свойств типа вызывается данное событие.
         /// </summary>
-        public event Action<Account, IFeedableNote> PropertyHasChanged;
+        public event Action<IFeedableNote> PropertyHasChanged;
 
         /// <summary>
         /// Значение по умолчанию для <see cref="School"/>, <see cref="University"/>.
@@ -109,7 +109,7 @@ namespace SocialNetwork.Core
 
         protected void OnPropertyHasChanged(string title, string description)
         {
-            PropertyHasChanged?.Invoke(Owner, new Note(Owner.Id, title, description));
+            PropertyHasChanged?.Invoke(new Note(Owner.Id, title, description));
         }
 
         #endregion

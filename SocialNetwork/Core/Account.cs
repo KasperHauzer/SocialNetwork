@@ -122,39 +122,39 @@ namespace SocialNetwork.Core
             Profile = new Profile(this);
         }
         
-        protected void OnFollowingPropertyHasChanged(Account account, IFeedableNote note)
+        protected void OnFollowingPropertyHasChanged(IFeedableNote note)
         {
-            FollowigPropertyHasChanged?.Invoke(account, note);
+            FollowigPropertyHasChanged?.Invoke(this, note);
         }
 
-        protected void OnFollowingPhotoHasChanged(Account account, Note note)
+        protected void OnFollowingPhotoHasChanged(Note note)
         {
-            FollowingPhotoHasChanged?.Invoke(account, note);
+            FollowingPhotoHasChanged?.Invoke(this, note);
         }
 
-        protected void OnFollowingPhotoHasRemoved(Account account, Note note)
+        protected void OnFollowingPhotoHasRemoved(Note note)
         {
-            FollowingPhotoHasRemoved?.Invoke(account, note);
+            FollowingPhotoHasRemoved?.Invoke(this, note);
         }
 
-        protected void OnFollowingPublishNews(Account account, Note note)
+        protected void OnFollowingPublishNews(Note note)
         {
-            FollowingPublishedNews?.Invoke(account, note);
+            FollowingPublishedNews?.Invoke(this, note);
         }
 
-        protected void OnFollowingRemovedNews(Account account, Note note)
+        protected void OnFollowingRemovedNews(Note note)
         {
-            FollowingRemovedNews?.Invoke(account, note);
+            FollowingRemovedNews?.Invoke(this, note);
         }
 
-        protected void OnFollowingGotFollower(Account account, Note note)
+        protected void OnFollowingGotFollower(Note note)
         {
-            FollowingGotFollower?.Invoke(account, note);
+            FollowingGotFollower?.Invoke(this, note);
         }
 
-        protected void OnFollowingGotFollowing(Account account, Note note)
+        protected void OnFollowingGotFollowing(Note note)
         {
-            FollowingGotFollowing?.Invoke(account, note);
+            FollowingGotFollowing?.Invoke(this, note);
         }
 
         #endregion
@@ -229,7 +229,7 @@ namespace SocialNetwork.Core
             following.Profile.GotFollowing += OnFollowingGotFollowing;
 
             if (following.Passport.Birthday.DayOfYear == DateTime.Now.DayOfYear) {
-                following.OnFollowingPropertyHasChanged(following, new Note(following.Id, "День рождение.", $"Сегодня день рождения {following.Passport.Middlename} {following.Passport.Name}"));
+                following.OnFollowingPropertyHasChanged(new Note(following.Id, "День рождение.", $"Сегодня день рождения пользователя {following.Passport.Middlename} {following.Passport.Name}"));
             }
 
             return true;
