@@ -19,21 +19,27 @@ namespace SocialNetwork.Net
 
         public Account Account {
             get;
-            protected set;
+            set;
         }
 
         public IPEndPoint RemoteEP {
             get;
-            protected set;
+            set;
+        }
+
+        public IPEndPoint EndPoint {
+            get;
+            set;
         }
 
         #endregion
 
         #region Конструкторы
 
-        public Client(IPEndPoint remoteEP)
+        public Client(IPEndPoint remoteEP, IPEndPoint myEP)
         {
             RemoteEP = remoteEP;
+            EndPoint = myEP;
         }
 
         #endregion
@@ -65,6 +71,14 @@ namespace SocialNetwork.Net
         public Response ConvertResponse(Response request)
         {
             switch (request.Description) {
+                case "run": {
+                    return Run();
+                }
+
+                case "stop": {
+                    return Stop();
+                }
+
                 case "register" when request.Data is string: {
                     var id = (string)request.Data;
                     return Register(id);
@@ -77,6 +91,30 @@ namespace SocialNetwork.Net
 
                 default: return new Response(false, "Команда не распознана.");
             }
+        }
+
+        protected Response Run()
+        {
+            if (Socket != null) {
+                return new Response("Клиент был активирован ранее.");
+            }
+
+            Socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
+            Socket.Bind(EndPoint);
+            Socket.Listen(2);
+            Socket.BeginAccept(AcceptCallback, null);
+            return new Response("Клиент успешно активирован");
+        }
+
+        protected Response Stop()
+        {
+            if (Socket == null) {
+                return new Response(false, "Клиент был диактивирован ранее.");
+            }
+
+            Socket.Close();
+            Socket = null;
+            return new Response(true, "Сервер успешно диактивирован.");
         }
 
         protected Response Register(string id)
