@@ -131,12 +131,12 @@ namespace SocialNetwork.Net
         protected Response Stop()
         {
             if (Socket == null) {
-                return new Response(false, "Сервер был дизактивирован ранее.");
+                return new Response(false, "Сервер был диактивирован ранее.");
             }
 
             Socket.Close();
             Socket = null;
-            return new Response(true, "Сервер успешно дизактивирован.");
+            return new Response(true, "Сервер успешно диактивирован.");
         }
 
         /// <summary>
