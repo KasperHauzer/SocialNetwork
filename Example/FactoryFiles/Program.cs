@@ -13,9 +13,9 @@ namespace Example
 
             Title = "Пример использования библиотеки SocialNetwork.";
 
-            Account first = new Account("killmonger");
-            Account second = new Account("superUser");
-            Account third = new Account("axelerot");
+            Account first = new Account("1");
+            Account second = new Account("2");
+            Account third = new Account("3");
 
             first.FollowigPropertyHasChanged += ShowAction;
             first.FollowingPhotoHasChanged += ShowAction;
@@ -43,13 +43,13 @@ namespace Example
 
             #endregion Подготовительная часть
 
-            first.Passport.Name = "Макалистер";
+            first.Passport.Name = "1";
             first.Passport.Middlename = "Алистер";
 
-            second.Passport.Name = "Вонка";
+            second.Passport.Name = "2";
             second.Passport.Middlename = "Вилли";
 
-            third.Passport.Name = "Валентина";
+            third.Passport.Name = "3";
             third.Passport.Middlename = "Терешкова";
 
             //axelerot подписывается на killmonger & superUser.
@@ -67,15 +67,24 @@ namespace Example
             first.Profile.AddNews(news);
 
             second.Profile.Photo = (Bitmap)Image.FromFile(@"C:\Users\Arsanukaev\OneDrive\Pictures\php.jpg");
+            second.Profile.Photo = null;
             second.Passport.Birthday = System.DateTime.Now;
 
             first.Profile.RemoveNews(news);
+            first.Passport.Middlename = "Алалистер";
+
+            second.Passport.Lastname = "Петрович";
+            second.Education.School = "Президенсткий лицей";
 
             third.Unsubscribe(first);
 
             first.Passport.Status = MarritalStatus.Married;
 
             first.Passport.Name = "Степа";
+
+            first.SubscribeTo(third);
+
+            third.Passport.Gender = Gender.Male;
 
             ReadLine();
         }
