@@ -129,6 +129,7 @@ namespace SocialNetwork.Core
             set {
                 if (value == null) {
                     OnPhotoRemoved("Удалено фото пользователя.", $"{Owner.Passport.Middlename} {Owner.Passport.Name} удалил(-а) фото профиля.", DefaultPhoto);
+                    return;
                 }
 
                 OnPhotoRemoved("Изменено фото пользователя.", $"{Owner.Passport.Middlename} {Owner.Passport.Name} изменил(-а) фото профиля.", DefaultPhoto);
