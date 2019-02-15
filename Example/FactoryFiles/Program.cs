@@ -66,7 +66,7 @@ namespace Example
             );
             first.Profile.AddNews(news);
 
-            second.Profile.Photo = (Bitmap)Image.FromFile(@"C:\Users\Arsanukaev\OneDrive\Pictures\php.jpg");
+            second.Profile.Photo = new Bitmap(16, 16);
             second.Profile.Photo = null;
             second.Passport.Birthday = System.DateTime.Now;
 
